@@ -1,0 +1,44 @@
+<launch>
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find wpb_home_simulator)/worlds/room.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- Spawn the objects into Gazebo -->
+  <!-- <node name="bookshelft" pkg="gazebo_ros" type="spawn_model" args="-file $(find wpr_simulation)/models/bookshelft.model -x 3.0 -y 0.2 -z 0 -Y 3.14159 -urdf -model bookshelft" /> -->
+  <!-- <node name="bottle" pkg="gazebo_ros" type="spawn_model" args="-file $(find wpr_simulation)/models/bottles/red_bottle.model -x 2.8 -y 0 -z 0.6 -Y 0 -urdf -model red_bottle" /> -->
+
+<include file="$(find wpb_home_simulator)/launch/robot_namespace.launch">
+    <arg name="robot_namespace" value="wpb_1" /> 
+    <arg name="local_x" value="0" /> 
+    <arg name="local_y" value="0" /> 
+    <arg name="local_yaw" value="0" /> 
+</include>
+  <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find wpb_home_tutorials)/maps/map.yaml" /> -->
+
+<!-- <include file="$(find wpb_home_simulator)/launch/robot_namespace.launch">
+    <arg name="robot_namespace" value="wpb_2" /> 
+    <arg name="local_x" value="0" /> 
+    <arg name="local_y" value="1" /> 
+    <arg name="local_yaw" value="0" /> 
+</include> -->
+
+<!-- <include file="$(find wpb_home_simulator)/launch/robot_namespace.launch">
+    <arg name="robot_namespace" value="wpb_3" /> 
+    <arg name="local_x" value="1" /> 
+    <arg name="local_y" value="1" /> 
+    <arg name="local_yaw" value="0" /> 
+</include> -->
+
+<!-- <include file="$(find wpr_warehousing_monitor)/launch/monitor.launch"/> -->
+<include file="$(find wpr_warehousing_monitor)/launch/wpr_server.launch"/>
+
+  <!-- Command center  -->
+  <node pkg="wpr_command_center" type="wpr_command_center" name="wpr_command_center" output="screen" />
+
+</launch>

@@ -1,0 +1,4 @@
+robot_id: 3
+sim_flag: true
+WpbhLocalPlanner:
+  scan_topic: /wpb_3/scan
