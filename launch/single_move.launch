@@ -1,0 +1,45 @@
+<launch>
+ 
+ <arg name="robot_1_name" value="wpb_1"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find wpb_home_simulator)/worlds/room.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- Spawn the objects into Gazebo -->
+  <node name="orange_ball" pkg="gazebo_ros" type="spawn_model" args="-file $(find wpb_home_simulator)/models/balls/orange_ball.model -x 4.0 -y -0 -z 0  -urdf -model orange_ball" />
+  <node name="red_ball" pkg="gazebo_ros" type="spawn_model" args="-file $(find wpb_home_simulator)/models/balls/red_ball.model -x 2.0 -y 2.0 -z 0  -urdf -model red_ball" />
+  <node name="green_ball" pkg="gazebo_ros" type="spawn_model" args="-file $(find wpb_home_simulator)/models/balls/green_ball.model -x 2.0 -y -2.0 -z 0 -urdf -model green_ball" />
+  <node name="blue_ball" pkg="gazebo_ros" type="spawn_model" args="-file $(find wpb_home_simulator)/models/balls/blue_ball.model -x -2.0 -y -0 -z 0  -urdf -model blue_ball" />
+
+<!-- Simulation for robot_1 -->
+<include file="$(find wpb_home_simulator)/launch/robot_namespace.launch">
+    <arg name="robot_namespace" value="$(arg robot_1_name)" /> 
+    <arg name="local_x" value="0" /> 
+    <arg name="local_y" value="0" /> 
+    <arg name="local_yaw" value="0" /> 
+</include>
+
+<!-- Follower_node for robot_1   ("follower_node" can be changed!)-->
+<node name="$(arg robot_1_name)_follower_node" pkg="follower_demo" type="follower_node"  output="screen">
+  <rosparam file="$(find wpb_home_simulator)/config/$(arg robot_1_name).yaml" command="load" />
+  <remap from="/scan" to="/$(arg robot_1_name)/scan"/>
+  <remap from="/cmd_vel" to="/$(arg robot_1_name)/cmd_vel"/>
+  <remap from="/wpb_home/move" to="/$(arg robot_1_name)/wpb_home/move"/>
+  <remap from="/wpb_home/behaviors" to="/$(arg robot_1_name)/wpb_home/behaviors"/>
+  <remap from="/team_mate_pose" to="/$(arg robot_1_name)/team_mate_pose"/>
+</node>
+
+<!-- <include file="$(find wpr_warehousing_monitor)/launch/monitor.launch"/> -->
+<include file="$(find wpr_warehousing_monitor)/launch/wpr_server.launch"/>
+
+  <!-- Command center  -->
+  <node pkg="wpr_command_center" type="wpr_command_center" name="wpr_command_center" output="screen" />
+
+</launch>
