@@ -39,16 +39,4 @@
   <material>Gazebo/Blue</material>
 </gazebo>
 
-<!-- Gazebo plugin for move -->
-<gazebo>
-  <plugin name="blue_ball_controller" filename="libgazebo_ros_planar_move.so">
-    <commandTopic>blue_ball_vel</commandTopic>
-    <odometryTopic>blue_odom</odometryTopic>
-    <odometryFrame>blue_odom</odometryFrame>
-    <odometryRate>0.0</odometryRate>
-    <robotBaseFrame>base_link</robotBaseFrame>
-    <broadcastTF>false</broadcastTF>
-  </plugin>
-</gazebo>
-
 </robot>

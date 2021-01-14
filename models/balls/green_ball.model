@@ -39,16 +39,4 @@
   <material>Gazebo/Green</material>
 </gazebo>
 
-<!-- Gazebo plugin for move -->
-<gazebo>
-  <plugin name="green_ball_controller" filename="libgazebo_ros_planar_move.so">
-    <commandTopic>green_ball_vel</commandTopic>
-    <odometryTopic>green_odom</odometryTopic>
-    <odometryFrame>green_odom</odometryFrame>
-    <odometryRate>0.0</odometryRate>
-    <robotBaseFrame>base_link</robotBaseFrame>
-    <broadcastTF>false</broadcastTF>
-  </plugin>
-</gazebo>
-
 </robot>
